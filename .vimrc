@@ -59,3 +59,9 @@ syntax on
 nmap <tab>m :NERDTree<space>
 set splitbelow
 set splitright
+
+"search down into dirs and sub dirs
+set path+=**
+
+"search for all matching files when we tab complete
+set wildmenu
