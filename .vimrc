@@ -48,9 +48,9 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 set nu
 inoremap jj <ESC>
-nmap <TAB>j :tabp<cr>
-nmap <tab>k :tabn<cr>
-nmap <tab>ll :set nu<cr>
+nmap <TAB>h :tabp<cr>
+nmap <tab>l :tabn<cr>
+nmap <tab>n :set nu<cr>
 nmap <tab>nn :set nonu<cr>
 nmap <tab><space> :tabnew<space>
 nmap <tab>b :!bash<cr>
