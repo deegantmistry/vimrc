@@ -42,6 +42,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+set visualbell
 set tabstop=4 shiftwidth=4 expandtab
 nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
