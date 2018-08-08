@@ -15,6 +15,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'jiangmiao/auto-pairs'
+Plug 'pangloss/vim-javascript'
+Plug 'mattn/emmet-vim'
+Plug 'Shougo/context_filetype.vim'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -83,6 +88,8 @@ else
   :cq
 endif
 
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+
 
 " <leader>ld to go to definition
 autocmd FileType javascript nnoremap <buffer>
@@ -94,17 +101,32 @@ autocmd FileType javascript nnoremap <buffer>
 autocmd FileType javascript nnoremap <buffer>
   \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
 
+
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
 """"""""""""""""""""""""""""""""""""""""
 " deoplete
 let g:deoplete#enable_at_startup = 1
-""""""""""""""""""""""""""""""""""""""""
+"let g:deoplete#disable_auto_complete = 1
 
+" deoplete go down on list
+inoremap <expr><c-j> pumvisible() ? "\<c-n>" : "\<c-j>"
+" deoplete go up on list
+inoremap <expr><c-k> pumvisible() ? "\<c-p>" : "\<c-k>"
+
+inoremap <c-space> <c-x><c-o>
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+""""""""""""""""""""""""""""""""""""""""
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 
 filetype plugin indent on
 syntax enable
 
 set encoding=utf-8
+
 """""""""""""""""""""""""""""""""""""""""""""""
+
 set runtimepath^=~/.vim/plugged/ctrlp.vim
 
 
@@ -139,80 +161,17 @@ let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['ultisnips']
 
-" Additional YouCompleteMe config.
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_collect_identifiers_from_comments_and_strings = 1
-"let g:ycm_seed_identifiers_with_syntax = 1
-"""""""""""""""""""""""""""""""""""""""""""""""
-" Set bin if you have many instalations
-let g:deoplete#sources#ternjs#tern_bin = '/usr/local/bin/tern'
-let g:deoplete#sources#ternjs#timeout = 1
-
-" Whether to include the types of the completions in the result data. Default: 0
-let g:deoplete#sources#ternjs#types = 1
-
-" Whether to include the distance (in scopes for variables, in prototypes for 
-" properties) between the completions and the origin position in the result 
-" data. Default: 0
-let g:deoplete#sources#ternjs#depths = 1
-
-" Whether to include documentation strings (if found) in the result data.
-" Default: 0
-let g:deoplete#sources#ternjs#docs = 1
-
-" When on, only completions that match the current word at the given point will
-" be returned. Turn this off to get all results, so that you can filter on the 
-" client side. Default: 1
-let g:deoplete#sources#ternjs#filter = 0
-
-" Whether to use a case-insensitive compare between the current word and 
-" potential completions. Default 0
-let g:deoplete#sources#ternjs#case_insensitive = 1
-
-" When completing a property and no completions are found, Tern will use some 
-" heuristics to try and return some properties anyway. Set this to 0 to 
-" turn that off. Default: 1
-let g:deoplete#sources#ternjs#guess = 0
-
-" Determines whether the result set will be sorted. Default: 1
-let g:deoplete#sources#ternjs#sort = 0
-
-" When disabled, only the text before the given position is considered part of 
-" the word. When enabled (the default), the whole variable name that the cursor
-" is on will be included. Default: 1
-let g:deoplete#sources#ternjs#expand_word_forward = 0
-
-" Whether to ignore the properties of Object.prototype unless they have been 
-" spelled out by at least two characters. Default: 1
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
-
-" Whether to include JavaScript keywords when completing something that is not 
-" a property. Default: 0
-let g:deoplete#sources#ternjs#include_keywords = 1
-
-" If completions should be returned when inside a literal. Default: 1
-let g:deoplete#sources#ternjs#in_literal = 0
-
-
-"Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ 'javascript.jsx',
-                \ 'vue',
-                \ '...'
-                \ ]
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set visualbell
 set tabstop=4 shiftwidth=4 expandtab
 let g:ctrlp_map = '<c-p>'
-nmap :q :bd
 nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 set nu
 inoremap jj <ESC>
+nmap <tab>s ysiw
 nmap <TAB>h :tabp<cr>
 nmap <tab>l :tabn<cr>
 nmap <tab>n :set nu<cr>
