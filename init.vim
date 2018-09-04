@@ -20,10 +20,14 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/context_filetype.vim'
+Plug 'w0rp/ale'
+Plug 'zchee/deoplete-jedi'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
-    \ 'do': './install.sh && npm install -g javascript-typescript-langserver && pip3 install python-language-server',
+    \ 'do': '/bin/bash install.sh',
     \ }
 
 " (Optional) Multi-entry selection UI.
@@ -92,7 +96,7 @@ autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 
 
 " <leader>ld to go to definition
-autocmd FileType javascript nnoremap <buffer>
+autocmd FileType javascript,python nnoremap <buffer>
   \ <tab>dd :call LanguageClient_textDocument_definition()<cr>
 " <leader>lh for type info under cursor
 autocmd FileType javascript nnoremap <buffer>
@@ -143,24 +147,26 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 " Prevent UltiSnips from removing our carefully-crafted mappings.
 let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 
-        "if has('autocmd')
-        "  augroup WincentAutocomplete
-        "    autocmd!
-        "    autocmd! User UltiSnipsEnterFirstSnippet
-        "    autocmd User UltiSnipsEnterFirstSnippet call autocomplete#setup_mappings()
-        "    autocmd! User UltiSnipsExitLastSnippet
-        "    autocmd User UltiSnipsExitLastSnippet call autocomplete#teardown_mappings()
-        "  augroup END
-        "endif
-
-"let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-"let g:ycm_key_list_accept_completion = ['<C-y>']
 
 " Additional UltiSnips config.
 let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['ultisnips']
+"""""""""""""""""""""""""""""""""""""""""""""""
+"let g:ale_sign_column_always = 1
 
+" Set this in your vimrc file to disabling highlighting
+let g:ale_set_highlights = 0
+
+let g:ale_fixers = {
+\   'python': ['pylint'],
+\   'javascript': ['eslint', 'prettier'],
+\}
+
+" Set this variable to 1 to fix files when you save them.
+"let g:ale_fix_on_save = 1
+" In ~/.vim/vimrc, or somewhere similar.
+
+"""""""""""""""""""""""""""""""""""""""""""""""
 
 set visualbell
 set tabstop=4 shiftwidth=4 expandtab
@@ -171,7 +177,7 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 set nu
 inoremap jj <ESC>
-nmap <tab>s ysiw
+nmap S ysiw
 nmap <TAB>h :tabp<cr>
 nmap <tab>l :tabn<cr>
 nmap <tab>n :set nu<cr>
@@ -193,11 +199,10 @@ nmap <tab>nn :set nonu<cr>
 nmap <tab><space> :tabedit<space>
 nmap <tab>b :!bash<cr>
 syntax on
-:colorscheme torte
+":colorscheme torte
 nmap <tab>m :NERDTree<space>
 set splitbelow
 set splitright
 
 "search down into dirs and sub dirs
 set path+=**
-
