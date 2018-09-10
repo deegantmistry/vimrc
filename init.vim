@@ -21,9 +21,11 @@ Plug 'pangloss/vim-javascript'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'w0rp/ale'
-Plug 'zchee/deoplete-jedi'
+"Plug 'zchee/deoplete-jedi'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'rakr/vim-one'
+
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -99,10 +101,10 @@ autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript,python nnoremap <buffer>
   \ <tab>dd :call LanguageClient_textDocument_definition()<cr>
 " <leader>lh for type info under cursor
-autocmd FileType javascript nnoremap <buffer>
+autocmd FileType javascript,python nnoremap <buffer>
   \ <leader>lh :call LanguageClient_textDocument_hover()<cr>
 " <leader>lr to rename variable under cursor
-autocmd FileType javascript nnoremap <buffer>
+autocmd FileType javascript,python nnoremap <buffer>
   \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
 
 
@@ -155,7 +157,7 @@ let g:UltiSnipsSnippetDirectories = ['ultisnips']
 "let g:ale_sign_column_always = 1
 
 " Set this in your vimrc file to disabling highlighting
-let g:ale_set_highlights = 0
+let g:ale_set_highlights = 1
 
 let g:ale_fixers = {
 \   'python': ['pylint'],
@@ -200,9 +202,14 @@ nmap <tab><space> :tabedit<space>
 nmap <tab>b :!bash<cr>
 syntax on
 ":colorscheme torte
+colorscheme one
+set background=dark " for the dark version
+" set background=light " for the light version
 nmap <tab>m :NERDTree<space>
 set splitbelow
 set splitright
 
 "search down into dirs and sub dirs
 set path+=**
+
+let g:airline_theme='one'
